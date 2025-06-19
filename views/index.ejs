@@ -20,25 +20,23 @@
       const allButtons = document.querySelectorAll(".button-container button");
       const allColors = ["light-blue", "olive-brown", "olive-green"];
       const timings = [25, 5, 15];
-      const timingsinSeconds = timings.map(t => t * 60);
+      const timingsinSeconds = timings.map((t) => t * 60);
       let isRunning = true;
       let intervalId = 0;
       let currentModeIndex = 0;
 
-      for (let i = 0; i < allButtons.length; i++) {
-        document.querySelectorAll(".button-container button")[i].addEventListener("click", function () {
-            if (!this.classList.contains("active")) {
-              this.classList.add("active");
+      allButtons.forEach((button, i) => {
+        button.addEventListener("click", function () {
+          if (!this.classList.contains("active")) {
+            this.classList.add("active");
+            currentModeIndex = i;
+            timingsinSeconds[currentModeIndex] = timings[i] * 60;
 
-              currentModeIndex = i;
-              timingsinSeconds[currentModeIndex] = timings[i] * 60;
-
-              for (let j = 0; j < allButtons.length; j++) {
-                if (allButtons[j] !== this) {
-                  allButtons[j].classList.remove("active");
-                }
+            allButtons.forEach((btn) => {
+              if (btn !== this) {
+                btn.classList.remove("active");
               }
-            }
+            });
 
             document.body.classList.remove(...allColors);
             document.body.classList.add(allColors[i]);
@@ -50,17 +48,18 @@
             } else {
               document.querySelector("p").textContent = timings[i] + ":00";
             }
+
             clearInterval(intervalId);
-          });
-      }
+          }
+        });
+      });
 
       document.querySelector(".start").addEventListener("click", function () {
         if (isRunning) {
-
           setTimeout(() => {
             document.querySelector(".start").textContent = "Stop";
-          }, 1000);
-        
+          }, 100);
+
           intervalId = setInterval(function () {
             if (timingsinSeconds[currentModeIndex] % 60 == 0) {
               if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
@@ -92,10 +91,9 @@
           }, 1000);
           isRunning = false;
         } else {
-
           setTimeout(() => {
             document.querySelector(".start").textContent = "Start";
-          }, 1000);
+          }, 100);
 
           if (timingsinSeconds[currentModeIndex] % 60 == 0) {
             if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
