@@ -36,14 +36,19 @@
               }
             }
 
+            
+            document.body.classList.remove(...allColors);
+            document.body.classList.add(allColors[i]);
+
+            document.querySelector(".start").textContent = "Start";
+            isRunning = true;
             if (timings[i] < 10) {
               document.querySelector("p").textContent = "0" + timings[i] + ":00";
             } else {
               document.querySelector("p").textContent = timings[i] + ":00";
             }
+            clearInterval(intervalId);
 
-            document.body.classList.remove(...allColors);
-            document.body.classList.add(allColors[i]);
           });
       }
 
@@ -79,7 +84,7 @@
                 seconds--;
 
                 if (seconds < 0) {
-                  clearInterval(this);
+                  clearInterval(intervalId);
                   document.querySelector("p").textContent = "00:00";
                 }
               }, 1000);
@@ -120,21 +125,6 @@
           isRunning = true;
         }
       });
-
-
-        document.querySelector(".short-break").addEventListener("click", function () {
-          document.querySelector(".start").textContent = "Start";
-          isRunning = true;
-          document.querySelector("p").textContent = "05:00";
-          clearInterval(intervalId);
-        });
-
-        document.querySelector(".long-break").addEventListener("click", function () {
-          document.querySelector(".start").textContent = "Start";
-          isRunning = true;
-          document.querySelector("p").textContent = "15:00";
-          clearInterval(intervalId);
-        });
 
     </script>
   </body>
