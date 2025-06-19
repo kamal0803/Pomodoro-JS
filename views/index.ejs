@@ -20,14 +20,18 @@
       const allButtons = document.querySelectorAll(".button-container button");
       const allColors = ["light-blue", "olive-brown", "olive-green"];
       const timings = [25, 5, 15];
+      const timingsinSeconds = timings.map(t => t * 60);
       let isRunning = true;
-      let seconds = 0;
       let intervalId = 0;
+      let currentModeIndex = 0;
 
       for (let i = 0; i < allButtons.length; i++) {
         document.querySelectorAll(".button-container button")[i].addEventListener("click", function () {
             if (!this.classList.contains("active")) {
               this.classList.add("active");
+
+              currentModeIndex = i;
+              timingsinSeconds[currentModeIndex] = timings[i] * 60;
 
               for (let j = 0; j < allButtons.length; j++) {
                 if (allButtons[j] !== this) {
@@ -36,7 +40,6 @@
               }
             }
 
-            
             document.body.classList.remove(...allColors);
             document.body.classList.add(allColors[i]);
 
@@ -48,74 +51,70 @@
               document.querySelector("p").textContent = timings[i] + ":00";
             }
             clearInterval(intervalId);
-
           });
       }
 
       document.querySelector(".start").addEventListener("click", function () {
         if (isRunning) {
+
+          
           document.querySelector(".start").textContent = "Stop";
+          
 
-          for (let i = 0; i < allButtons.length; i++) {
-            if (allButtons[i].classList.contains("active")) {
-              seconds = timings[i] * 60;
-              intervalId = setInterval(function () {
-                if (seconds % 60 == 0) {
-                  if (Math.floor(seconds / 60) < 10) {
-                    document.querySelector("p").textContent = "0" + Math.floor(seconds / 60) + ":00";
-                  } else {
-                    document.querySelector("p").textContent = Math.floor(seconds / 60) + ":00";
-                  }
-                } else if (seconds % 60 != 0) {
-                  if (seconds % 60 < 10) {
-                    if (Math.floor(seconds / 60) < 10) {
-                      document.querySelector("p").textContent = "0" + Math.floor(seconds / 60) + ":0" + (seconds % 60);
-                    } else {
-                      document.querySelector("p").textContent = Math.floor(seconds / 60) + ":0" + (seconds % 60);
-                    }
-                  } else {
-                    if (Math.floor(seconds / 60) < 10) {
-                      document.querySelector("p").textContent = "0" + Math.floor(seconds / 60) + ":" + (seconds % 60);
-                    } else {
-                      document.querySelector("p").textContent = Math.floor(seconds / 60) + ":" + (seconds % 60);
-                    }
-                  }
-                }
-                seconds--;
-
-                if (seconds < 0) {
-                  clearInterval(intervalId);
-                  document.querySelector("p").textContent = "00:00";
-                }
-              }, 1000);
-            }
-          }
-
-          isRunning = false;
-          console.log("Timer started");
-        } else {
-          document.querySelector(".start").textContent = "Start";
-
-          console.log(seconds);
-
-          if (seconds % 60 == 0) {
-            if (Math.floor(seconds / 60) < 10) {
-              document.querySelector("p").textContent = "0" + Math.floor(seconds / 60) + ":00";
-            } else {
-              document.querySelector("p").textContent = Math.floor(seconds / 60) + ":00";
-            }
-          } else if (seconds % 60 != 0) {
-            if (seconds % 60 < 10) {
-              if (Math.floor(seconds / 60) < 10) {
-                document.querySelector("p").textContent = "0" + Math.floor(seconds / 60) + ":0" + (seconds % 60);
+          intervalId = setInterval(function () {
+            if (timingsinSeconds[currentModeIndex] % 60 == 0) {
+              if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
+                document.querySelector("p").textContent = "0" + Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":00";
               } else {
-                document.querySelector("p").textContent = Math.floor(seconds / 60) + ":0" + (seconds % 60);
+                document.querySelector("p").textContent = Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":00";
+              }
+            } else if (timingsinSeconds[currentModeIndex] % 60 != 0) {
+              if (timingsinSeconds[currentModeIndex] % 60 < 10) {
+                if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
+                  document.querySelector("p").textContent = "0" + Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":0" + (timingsinSeconds[currentModeIndex] % 60);
+                } else {
+                  document.querySelector("p").textContent = Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":0" + (timingsinSeconds[currentModeIndex] % 60);
+                }
+              } else {
+                if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
+                  document.querySelector("p").textContent = "0" + Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":" + (timingsinSeconds[currentModeIndex] % 60);
+                } else {
+                  document.querySelector("p").textContent = Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":" + (timingsinSeconds[currentModeIndex] % 60);
+                }
+              }
+            }
+            timingsinSeconds[currentModeIndex]--;
+
+            if (timingsinSeconds[currentModeIndex] < 0) {
+              clearInterval(intervalId);
+              document.querySelector("p").textContent = "00:00";
+            }
+          }, 1000);
+          isRunning = false;
+        } else {
+
+          
+          document.querySelector(".start").textContent = "Start";
+        
+
+          if (timingsinSeconds[currentModeIndex] % 60 == 0) {
+            if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
+              document.querySelector("p").textContent = "0" + Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":00";
+            } else {
+              document.querySelector("p").textContent = Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":00";
+            }
+          } else if (timingsinSeconds[currentModeIndex] % 60 != 0) {
+            if (timingsinSeconds[currentModeIndex] % 60 < 10) {
+              if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
+                document.querySelector("p").textContent = "0" + Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":0" + (timingsinSeconds[currentModeIndex] % 60);
+              } else {
+                document.querySelector("p").textContent = Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":0" + (timingsinSeconds[currentModeIndex] % 60);
               }
             } else {
-              if (Math.floor(seconds / 60) < 10) {
-                document.querySelector("p").textContent = "0" + Math.floor(seconds / 60) + ":" + (seconds % 60);
+              if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
+                document.querySelector("p").textContent = "0" + Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":" + (timingsinSeconds[currentModeIndex] % 60);
               } else {
-                document.querySelector("p").textContent = Math.floor(seconds / 60) + ":" + (seconds % 60);
+                document.querySelector("p").textContent = Math.floor(timingsinSeconds[currentModeIndex] / 60) + ":" + (timingsinSeconds[currentModeIndex] % 60);
               }
             }
           }
@@ -125,7 +124,6 @@
           isRunning = true;
         }
       });
-
     </script>
   </body>
 </html>
