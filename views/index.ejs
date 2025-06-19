@@ -57,10 +57,10 @@
       document.querySelector(".start").addEventListener("click", function () {
         if (isRunning) {
 
-          
-          document.querySelector(".start").textContent = "Stop";
-          
-
+          setTimeout(() => {
+            document.querySelector(".start").textContent = "Stop";
+          }, 1000);
+        
           intervalId = setInterval(function () {
             if (timingsinSeconds[currentModeIndex] % 60 == 0) {
               if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
@@ -93,9 +93,9 @@
           isRunning = false;
         } else {
 
-          
-          document.querySelector(".start").textContent = "Start";
-        
+          setTimeout(() => {
+            document.querySelector(".start").textContent = "Start";
+          }, 1000);
 
           if (timingsinSeconds[currentModeIndex] % 60 == 0) {
             if (Math.floor(timingsinSeconds[currentModeIndex] / 60) < 10) {
