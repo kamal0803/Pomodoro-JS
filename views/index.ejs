@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles/styles.css" />
   </head>
   <body>
-
+    <progress max="1500" value="0"></progress>
 
     <div class="button-container">
       <button class="active">Pomodoro</button>
@@ -21,6 +21,7 @@
     
 
     <script>
+
       function timeDisplay() {
 
         let seconds = timingsinSeconds[currentModeIndex] % 60;
@@ -28,14 +29,14 @@
 
         if (seconds == 0) {
 
-          document.querySelector("p").textContent = document.querySelector("title").textContent = minutes < 10 ? "0" + minutes + ":00" : minutes + ":00";
+          document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":00" : minutes + ":00";
           
         } else {
 
           if (seconds < 10) {
-            document.querySelector("p").textContent = document.querySelector("title").textContent = minutes < 10 ? "0" + minutes + ":0" + seconds : minutes + ":0" + seconds;
+            document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":0" + seconds : minutes + ":0" + seconds;
           } else {
-            document.querySelector("p").textContent =  document.querySelector("title").textContent = minutes < 10 ? "0" + minutes + ":" + seconds : minutes + ":" + seconds;
+            document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":" + seconds : minutes + ":" + seconds;
           }
         }
       }
@@ -47,8 +48,10 @@
 
       const allButtons = document.querySelectorAll(".button-container button");
       const allColors = ["light-blue", "olive-brown", "olive-green"];
+      const darkerColors = ["dark-blue", "dark-olive-brown", "dark-olive-green"];
       const timings = [25, 5, 15];
       const timingsinSeconds = timings.map((t) => t * 60);
+      const progressBarArray = timings.map((t) => t * 60);
       let isRunning = true;
       let intervalId = 0;
       let currentModeIndex = 0;
@@ -66,16 +69,20 @@
               }
             });
 
+            isRunning = true;
+
             document.body.classList.remove(...allColors);
             document.body.classList.add(allColors[i]);
 
+            document.querySelector("progress").classList.remove(...darkerColors);
+            document.querySelector("progress").classList.add(darkerColors[i]);
+
             document.querySelector(".start").textContent = "Start";
-            isRunning = true;
-            if (timings[i] < 10) {
-              document.querySelector("p").textContent = "0" + timings[i] + ":00";
-            } else {
-              document.querySelector("p").textContent = timings[i] + ":00";
-            }
+
+            document.querySelector("p").textContent = timings[i] < 10 ? "0" + timings[i] + ":00" : timings[i] + ":00";
+
+            document.querySelector("progress").max = progressBarArray[currentModeIndex];
+            document.querySelector("progress").value = 0;
 
             clearInterval(intervalId);
           }
@@ -92,11 +99,15 @@
           intervalId = setInterval(function () {
             timeDisplay();
 
+            document.querySelector("progress").value = progressBarArray[currentModeIndex] - timingsinSeconds[currentModeIndex];
+
             timingsinSeconds[currentModeIndex]--;
 
-            if (timingsinSeconds[currentModeIndex] < 0) {
+            if (timingsinSeconds[currentModeIndex] <= 0) {
               clearInterval(intervalId);
               document.querySelector("p").textContent = "00:00";
+              document.querySelector("progress").value = progressBarArray[currentModeIndex];
+              return;
             }
           }, 1000);
           isRunning = false;
