@@ -65,3 +65,27 @@ p {
   transform: translateY(3px);
   box-shadow: 0 3px 0 #e0e0e0;
 }
+
+progress{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    z-index: 9999;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+}
+
+progress::-webkit-progress-bar {
+    background-color: white
+}
+
+progress::-webkit-progress-value {
+    background-color: #4caf50; /* Green bar */
+}
+
+progress::-moz-progress-bar {
+    background-color: #4caf50; /* Green bar */
+}
