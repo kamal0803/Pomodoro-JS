@@ -18,8 +18,6 @@
     <p>25:00</p>
     <button class="start">Start</button>
 
-    
-
     <script>
 
       function timeDisplay() {
@@ -30,13 +28,16 @@
         if (seconds == 0) {
 
           document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":00" : minutes + ":00";
+          document.querySelector("title").textContent = states[currentModeIndex] + " - " + (minutes < 10 ? "0" + minutes + ":00" : minutes + ":00");
           
         } else {
 
           if (seconds < 10) {
             document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":0" + seconds : minutes + ":0" + seconds;
+            document.querySelector("title").textContent = states[currentModeIndex] + " - " + (minutes < 10 ? "0" + minutes + ":0" + seconds : minutes + ":0" + seconds);
           } else {
             document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":" + seconds : minutes + ":" + seconds;
+            document.querySelector("title").textContent = states[currentModeIndex] + " - " + (minutes < 10 ? "0" + minutes + ":" + seconds : minutes + ":" + seconds);
           }
         }
       }
@@ -46,24 +47,27 @@
         audio.play();
       }
 
-      const allButtons = document.querySelectorAll(".button-container button");
       const allColors = ["light-blue", "olive-brown", "olive-green"];
       const darkerColors = ["dark-blue", "dark-olive-brown", "dark-olive-green"];
       const timings = [25, 5, 15];
       const timingsinSeconds = timings.map((t) => t * 60);
       const progressBarArray = timings.map((t) => t * 60);
+      const states = ["Pomodoro", "Short Break", "Long Break"];
       let isRunning = true;
       let intervalId = 0;
       let currentModeIndex = 0;
+      let totalPomodoros = 0;
+      let totalShortBreaks = 0;
+      let totalLongBreaks = 0;
 
-      allButtons.forEach((button, i) => {
+      document.querySelectorAll(".button-container button").forEach((button, i) => {
         button.addEventListener("click", function () {
           if (!this.classList.contains("active")) {
             this.classList.add("active");
             currentModeIndex = i;
             timingsinSeconds[currentModeIndex] = timings[i] * 60;
 
-            allButtons.forEach((btn) => {
+            document.querySelectorAll(".button-container button").forEach((btn) => {
               if (btn !== this) {
                 btn.classList.remove("active");
               }
@@ -80,6 +84,7 @@
             document.querySelector(".start").textContent = "Start";
 
             document.querySelector("p").textContent = timings[i] < 10 ? "0" + timings[i] + ":00" : timings[i] + ":00";
+            document.querySelector("title").textContent = states[i] + " - " + (timings[i] < 10 ? "0" + timings[i] + ":00" : timings[i] + ":00");
 
             document.querySelector("progress").max = progressBarArray[currentModeIndex];
             document.querySelector("progress").value = 0;
@@ -111,6 +116,7 @@
             }
           }, 1000);
           isRunning = false;
+          
         } else {
 
           document.querySelector(".start").textContent = "Start";
