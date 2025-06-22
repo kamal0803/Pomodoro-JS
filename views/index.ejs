@@ -8,127 +8,16 @@
     <link rel="stylesheet" href="/styles/styles.css" />
   </head>
   <body>
-    <progress max="1500" value="0"></progress>
+    <progress max="120" value="0"></progress>
 
     <div class="button-container">
       <button class="active">Pomodoro</button>
-      <button>Short Break</button>
-      <button>Long Break</button>
+      <button class="short-break">Short Break</button>
+      <button class="long-break">Long Break</button>
     </div>
     <p>25:00</p>
     <button class="start">Start</button>
 
-    <script>
-
-      function timeDisplay() {
-
-        let seconds = timingsinSeconds[currentModeIndex] % 60;
-        let minutes = Math.floor(timingsinSeconds[currentModeIndex] / 60);
-
-        if (seconds == 0) {
-
-          document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":00" : minutes + ":00";
-          document.querySelector("title").textContent = states[currentModeIndex] + " - " + (minutes < 10 ? "0" + minutes + ":00" : minutes + ":00");
-          
-        } else {
-
-          if (seconds < 10) {
-            document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":0" + seconds : minutes + ":0" + seconds;
-            document.querySelector("title").textContent = states[currentModeIndex] + " - " + (minutes < 10 ? "0" + minutes + ":0" + seconds : minutes + ":0" + seconds);
-          } else {
-            document.querySelector("p").textContent = minutes < 10 ? "0" + minutes + ":" + seconds : minutes + ":" + seconds;
-            document.querySelector("title").textContent = states[currentModeIndex] + " - " + (minutes < 10 ? "0" + minutes + ":" + seconds : minutes + ":" + seconds);
-          }
-        }
-      }
-
-      function playAudio(sound) {
-        var audio = new Audio(`./sounds/${sound}.mp3`);
-        audio.play();
-      }
-
-      const allColors = ["light-blue", "olive-brown", "olive-green"];
-      const darkerColors = ["dark-blue", "dark-olive-brown", "dark-olive-green"];
-      const timings = [25, 5, 15];
-      const timingsinSeconds = timings.map((t) => t * 60);
-      const progressBarArray = timings.map((t) => t * 60);
-      const states = ["Pomodoro", "Short Break", "Long Break"];
-      let isRunning = true;
-      let intervalId = 0;
-      let currentModeIndex = 0;
-      let totalPomodoros = 0;
-      let totalShortBreaks = 0;
-      let totalLongBreaks = 0;
-
-      document.querySelectorAll(".button-container button").forEach((button, i) => {
-        button.addEventListener("click", function () {
-          if (!this.classList.contains("active")) {
-            this.classList.add("active");
-            currentModeIndex = i;
-            timingsinSeconds[currentModeIndex] = timings[i] * 60;
-
-            document.querySelectorAll(".button-container button").forEach((btn) => {
-              if (btn !== this) {
-                btn.classList.remove("active");
-              }
-            });
-
-            isRunning = true;
-
-            document.body.classList.remove(...allColors);
-            document.body.classList.add(allColors[i]);
-
-            document.querySelector("progress").classList.remove(...darkerColors);
-            document.querySelector("progress").classList.add(darkerColors[i]);
-
-            document.querySelector(".start").textContent = "Start";
-
-            document.querySelector("p").textContent = timings[i] < 10 ? "0" + timings[i] + ":00" : timings[i] + ":00";
-            document.querySelector("title").textContent = states[i] + " - " + (timings[i] < 10 ? "0" + timings[i] + ":00" : timings[i] + ":00");
-
-            document.querySelector("progress").max = progressBarArray[currentModeIndex];
-            document.querySelector("progress").value = 0;
-
-            clearInterval(intervalId);
-          }
-        });
-      });
-
-
-      document.querySelector(".start").addEventListener("click", function () {
-        if (isRunning) {
-
-          document.querySelector(".start").textContent = "Stop";
-          playAudio("button-sound");
-
-          intervalId = setInterval(function () {
-            timeDisplay();
-
-            document.querySelector("progress").value = progressBarArray[currentModeIndex] - timingsinSeconds[currentModeIndex];
-
-            timingsinSeconds[currentModeIndex]--;
-
-            if (timingsinSeconds[currentModeIndex] <= 0) {
-              clearInterval(intervalId);
-              document.querySelector("p").textContent = "00:00";
-              document.querySelector("progress").value = progressBarArray[currentModeIndex];
-              return;
-            }
-          }, 1000);
-          isRunning = false;
-          
-        } else {
-
-          document.querySelector(".start").textContent = "Start";
-          playAudio("button-sound");
-
-          timeDisplay();
-
-          clearInterval(intervalId);
-          console.log("Timer stopped");
-          isRunning = true;
-        }
-      });
-    </script>
+    <script src="/js/pomodoro.js"></script>
   </body>
 </html>
