@@ -1,1 +1,1 @@
-Built a Pomodoro Timer app using Node, Express and EJS
+Built a Pomodoro Timer app using Javascript, HTML & CSS
