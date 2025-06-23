@@ -1,3 +1,10 @@
+function showCheckmark(mode){
+  checkmarks[mode]++;
+  const span = document.getElementById(`${mode}-check`);
+  span.textContent = `✔ x ${checkmarks[mode]}`;
+}
+
+
 function nextShortBreak() {
   playAudio("break");
   switchToMode(1);
@@ -46,7 +53,6 @@ function switchToMode(index) {
 function timerCountDown() {
   if (isRunning) {
     document.querySelector(".start").textContent = "Stop";
-    console.log("Timer started");
     intervalId = setInterval(function () {
       timeDisplay();
       document.querySelector("progress").value = progressBarArray[currentModeIndex] - timingsinSeconds[currentModeIndex];
@@ -56,10 +62,13 @@ function timerCountDown() {
       if (timingsinSeconds[currentModeIndex] < 0) {
         if (currentModeIndex === 0) {
           totalPomodoros++;
+          showCheckmark("pomodoro");
         } else if (currentModeIndex === 1) {
           totalShortBreaks++;
+          showCheckmark("short");
         } else if (currentModeIndex === 2) {
           totalLongBreaks++;
+          showCheckmark("long");
         }
 
         clearInterval(intervalId);
@@ -76,10 +85,6 @@ function timerCountDown() {
           nextPomodoro();
         }
 
-        console.log(totalPomodoros + " Pomodoros completed");
-        console.log(totalShortBreaks + " Short Breaks completed");
-        console.log(totalLongBreaks + " Long Breaks completed");
-
         return;
       }
     }, 1000);
@@ -90,7 +95,6 @@ function timerCountDown() {
     timeDisplay();
 
     clearInterval(intervalId);
-    console.log("Timer stopped");
     isRunning = true;
   }
 }
@@ -124,12 +128,18 @@ const timings = [25, 5, 15];
 const timingsinSeconds = timings.map((t) => t * 60);
 const progressBarArray = timings.map((t) => t * 60);
 const states = ["Pomodoro", "Short Break", "Long Break"];
+const checkmarks = {
+  pomodoro: 0,
+  short: 0,
+  long: 0
+};
 let isRunning = true;
 let intervalId = 0;
 let currentModeIndex = 0;
 let totalPomodoros = 0;
 let totalShortBreaks = 0;
 let totalLongBreaks = 0;
+
 
 document.querySelectorAll(".button-container button").forEach((button, i) => {
   button.addEventListener("click", function () {

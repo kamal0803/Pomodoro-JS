@@ -11,9 +11,18 @@
     <progress max="1500" value="0"></progress>
 
     <div class="button-container">
-      <button class="active">Pomodoro</button>
-      <button>Short Break</button>
-      <button>Long Break</button>
+      <div class="mode">
+        <span class="checkmark" id="pomodoro-check"></span>
+        <button class="active" data-mode="pomodoro">Pomodoro</button>
+      </div>
+      <div class="mode">
+        <span class="checkmark" id="short-check"></span>
+        <button data-mode="short">Short Break</button>
+      </div>
+      <div class="mode">
+        <span class="checkmark" id="long-check"></span>
+        <button data-mode="long">Long Break</button>
+      </div>
     </div>
     <p>25:00</p>
     <button class="start">Start</button>
