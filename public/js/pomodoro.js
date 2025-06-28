@@ -122,8 +122,8 @@ function playAudio(sound) {
   audio.play();
 }
 
-const allColors = ["light-blue", "olive-brown", "olive-green"];
-const darkerColors = ["dark-blue", "dark-olive-brown", "dark-olive-green"];
+const allColors = ["sky-blue", "teal-green", "golden-yellow"];
+const darkerColors = ["dark-blue", "dark-teal-green", "dark-golden-yellow"];
 const timings = [25, 5, 15];
 const timingsinSeconds = timings.map((t) => t * 60);
 const progressBarArray = timings.map((t) => t * 60);

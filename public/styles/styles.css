@@ -1,5 +1,5 @@
 body {
-    background-color: #4A567A;
+    background-color: #4DA8DA;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,27 +36,27 @@ body {
 }
 
 .checkmark {
-    color: limegreen;
+    color: #06923E;
     font-size: 1rem;
     margin-bottom: 4px;
     height: 1rem;
     transition: all 0.3s ease;
 }
 
-.light-blue {
-    background-color: #4A567A;
+.sky-blue {
+    background-color: #4DA8DA;
 }
 
 .dark-blue {
-    background-color: #404B6A;
+    background-color: #499AC6;
 }
 
-.olive-brown {
-    background-color: #7A6F47;
+.teal-green {
+    background-color: #80D8C3;
 }
 
-.olive-green {
-    background-color: #617657;
+.golden-yellow {
+    background-color: #FFD66B;
 }
 
 p {
@@ -96,15 +96,15 @@ progress{
 }
 
 progress::-webkit-progress-bar {
-    background-color: #404B6A;
+    background-color: #3682AB;
 }
 
-progress.dark-olive-brown::-webkit-progress-bar {
-    background-color: #6C623F;
+progress.dark-teal-green::-webkit-progress-bar {
+    background-color: #5FBCA7;
 }
 
-progress.dark-olive-green::-webkit-progress-bar {
-    background-color: #55634F;
+progress.dark-golden-yellow::-webkit-progress-bar {
+    background-color: #E6B84F;
 }
 
 progress::-webkit-progress-value {
