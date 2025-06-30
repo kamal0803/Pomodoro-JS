@@ -1,3 +1,23 @@
+function reset(){
+
+  timingsinSeconds[currentModeIndex] = timings[currentModeIndex]*60;
+  progressBarArray[currentModeIndex] = timings[currentModeIndex]*60;
+
+  isRunning = true;
+
+  document.querySelector(".start").textContent = "Start";
+
+  document.querySelector("p").textContent = timings[currentModeIndex] < 10 ? "0" + timings[currentModeIndex] + ":00" : timings[currentModeIndex] + ":00";
+  document.querySelector("title").textContent = states[currentModeIndex] + " - " + (timings[currentModeIndex] < 10 ? "0" + timings[currentModeIndex] + ":00" : timings[currentModeIndex] + ":00");
+
+  document.querySelector("progress").max = progressBarArray[currentModeIndex];
+  document.querySelector("progress").value = 0;
+
+  console.log(`Reset clicked. Value of isRunning is ${isRunning}`);
+
+  clearInterval(intervalId);
+}
+
 function showCheckmark(mode){
   checkmarks[mode]++;
   const span = document.getElementById(`${mode}-check`);
@@ -178,4 +198,9 @@ document.querySelectorAll(".button-container button").forEach((button, i) => {
 document.querySelector(".start").addEventListener("click", function () {
   playAudio("button-sound");
   timerCountDown();
+});
+
+document.querySelector(".reset").addEventListener("click", function(){
+  playAudio("button-sound");
+  reset();
 });

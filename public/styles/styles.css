@@ -25,6 +25,12 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+.start-reset-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .button-container button.active {
     border: 2px solid white;
 }
@@ -65,7 +71,7 @@ p {
     padding: 20px;
 }
 
-.start {
+.start, .reset {
   background-color: white;
   color: #3f736a;
   font-weight: bold;
