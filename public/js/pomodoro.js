@@ -13,8 +13,6 @@ function reset(){
   document.querySelector("progress").max = progressBarArray[currentModeIndex];
   document.querySelector("progress").value = 0;
 
-  console.log(`Reset clicked. Value of isRunning is ${isRunning}`);
-
   clearInterval(intervalId);
 }
 
