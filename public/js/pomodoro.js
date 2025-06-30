@@ -160,7 +160,6 @@ let totalPomodoros = 0;
 let totalShortBreaks = 0;
 let totalLongBreaks = 0;
 
-
 document.querySelectorAll(".button-container button").forEach((button, i) => {
   button.addEventListener("click", function () {
     if (!this.classList.contains("active")) {
@@ -198,6 +197,15 @@ document.querySelectorAll(".button-container button").forEach((button, i) => {
 document.querySelector(".start").addEventListener("click", function () {
   playAudio("button-sound");
   timerCountDown();
+});
+
+document.addEventListener("keydown", function(e){
+  if(e.code === "Space" && !e.repeat){
+    e.preventDefault();
+    playAudio("button-sound");
+    timerCountDown();
+
+  }
 });
 
 document.querySelector(".reset").addEventListener("click", function(){
